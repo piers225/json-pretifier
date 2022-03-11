@@ -1,0 +1,10 @@
+
+
+textarea {
+    width: 70vw;
+    height : 100px;
+}
+
+.error { 
+    color: red;
+}
