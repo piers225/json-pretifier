@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Json Prettifier
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a smple Json Pretifier written in React.
 
 ## Available Scripts
 
