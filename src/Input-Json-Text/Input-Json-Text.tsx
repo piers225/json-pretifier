@@ -2,10 +2,12 @@ import React from 'react';
 import './Input-Json-Text.css';
 
 interface InputJsonTextProps {
-    onJsonChange : (json : {}) => void ;
+    onJsonChange : (json : {} | [] | string | number | boolean | null) => void ;
 }
 
-export class InputJsonText extends React.Component<InputJsonTextProps, { valid : boolean }> { 
+type InputJsonTextState = { valid : true } | { valid : false, error : Error };
+
+export class InputJsonText extends React.Component<InputJsonTextProps, InputJsonTextState> { 
 
         constructor(props : InputJsonTextProps) {
             super(props);
@@ -15,56 +17,35 @@ export class InputJsonText extends React.Component<InputJsonTextProps, { valid :
             }
 
         }
-
-        properties : {
-            json : string,
-            escaped : boolean 
-        } = {
-            json : '',
-            escaped : false
-        };
-
-        private jsonChange(str : string) {
-            this.properties.json = str;
-            this.parse();
-        }
-
-        private escapedChange( escaped : string) {
-            this.properties.escaped = escaped === 'on';
-            this.parse();
-        }
-
-        private parse () {
-            if (!this.properties.json) {
-                this.setState({ valid : false});
-                return;
-            }
-            let json = this.properties.json;
-
-            if (this.properties.escaped) {
-                json = json.replace(/\\"/g, "\"")
-            }
+      
+        private jsonChange (json : string) {
             
             try {
                 const jsonObject = JSON.parse(json);
                 this.setState({ valid : true});
                 this.props.onJsonChange(jsonObject);
             }
-            catch(e )
+            catch(e : unknown)
             {
                 console.error(e);
-                this.setState({ valid : false});
+                if (e instanceof Error ) {
+                    this.setState({ 
+                        valid : false,
+                        error : e
+                    });
+                }
+                this.props.onJsonChange(null);
             }
         }
 
         render() {
             return (
-                <div>
-                    <textarea name="Text1" cols={40} rows={5} onChange={(event) => this.jsonChange(event.target.value) } defaultValue={''} ></textarea>
-                    <br />
-                    Remove Escaped string <input type="checkbox" value="on" onChange={(event) => this.escapedChange(event.target.value)}  ></input>
-                    <br />
-                    { this.state.valid ? <span></span> : <span className="error">Invalid Json Entered</span> }
+                <div className="input-text">
+                    <div className='form'>
+                        <p>Enter Json to Format</p>
+                        <textarea name="inputJsonText" cols={40} rows={5} onChange={(event) => this.jsonChange(event.target.value) } defaultValue={''} ></textarea>
+                        <p>{ this.state.valid ? undefined : <span className="error">Invalid Json Entered : { this.state.error.message }</span> }</p>
+                    </div>
                 </div>
             )
         }

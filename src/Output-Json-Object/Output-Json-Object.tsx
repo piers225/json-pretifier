@@ -1,20 +1,22 @@
 import React from "react";
+import { analyseJsonNode } from "./json-functions/json-functions";
 import "./Output-Json-Object.css"
 
-interface OutputJsonTextJson {
-    jsonValue : object;
+interface OutputJsonTextJsonProperties {
+    jsonValue : {} | [] | string | number | null;
 }
 
-export class OutputJsonText extends React.Component<OutputJsonTextJson, {  }> { 
-    constructor(props : OutputJsonTextJson) {
-        super(props);
+
+export function OutputJsonText(props : OutputJsonTextJsonProperties) { 
+
+    if (props.jsonValue === null) {
+        return <></>;
     }
 
-    render() {
-        return  (
+    return  (
         <div className="output-json" >
-            <pre>{JSON.stringify(this.props.jsonValue, null, 2) }</pre>
+            { analyseJsonNode(props.jsonValue) }
         </div>
-        );
-    }
+    );
+
 }

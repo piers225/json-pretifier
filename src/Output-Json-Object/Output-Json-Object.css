@@ -3,4 +3,6 @@
     scroll-behavior: smooth;
     width: 70vw;
     margin: 0 auto;
+    padding : 5px;
+    text-align: left;
 }
