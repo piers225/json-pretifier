@@ -2,3 +2,7 @@
 .array-item {
     margin-left : 20px;
 }
+
+.array:hover > .bracket {
+    font-weight: bold;
+}

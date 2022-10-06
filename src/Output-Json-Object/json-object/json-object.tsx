@@ -6,14 +6,14 @@ import { analyseJsonNode } from "../json-functions/json-functions";
 export function JsonObject(jsonObject : { [key : string] : any }) {
 
     return (
-        <span>
-             &#123;
+        <span className="object">
+            <span className="bracket">&#123;</span>
             { Object.keys(jsonObject).map((key, index) => (
                 <div className="object-key" key={index} >
-                    "{ key }" : { analyseJsonNode(jsonObject[key]) }
+                    <span className="object-key-name">"{ key }"</span> : { analyseJsonNode(jsonObject[key]) }
                 </div>))  
             }
-             &#125;
+            <span className="bracket">&#125;</span>
         </span>
     )
 }

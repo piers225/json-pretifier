@@ -3,7 +3,8 @@ import { analyseJsonNode } from "../json-functions/json-functions"
 
 export function JsonArray(jsonArray : any[]) : JSX.Element {
     return (
-        <>[
+        <span className="array">
+            <span className="bracket">[</span>
             {  
                 jsonArray.map((f, i) => (
                     <div className="array-item" key={i}> 
@@ -11,7 +12,8 @@ export function JsonArray(jsonArray : any[]) : JSX.Element {
                         { i === jsonArray.length - 1 ? undefined : "," } 
                     </div>)
                 ) 
-             }
-        ]</>
+            }
+            <span className="bracket">]</span>
+        </span>
     )
 }

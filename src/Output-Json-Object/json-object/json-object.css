@@ -3,3 +3,9 @@
 .object-key {
     margin-left : 20px;
 }
+
+
+.object:hover > .bracket {
+    font-weight: bold;
+}
+
